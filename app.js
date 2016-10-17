@@ -1,28 +1,32 @@
-(function () {
-'use strict';
+(function ( ) {
+    "use strict";
+    var assignmentsApp = angular.module("LunchApp", []);
 
-angular.module('LunchCheck', [])
+    assignmentsApp.controller("LunchContoller", m1Ctrl);
 
-.controller('LunchCheckController', function ($scope) {
-  $scope.lunch-menu = "";
-  $scope.totalValue = 0;
+    function m1Ctrl( $scope ){
+        $scope.itemsList = "";
+        $scope.numberOfItems = 0;
 
-  $scope.displayNumeric = function () {
-    var totalNameValue = calculatNumericForString($scope.name);
-    $scope.totalValue = totalNameValue;
-  };
+        $scope.updateNumberOfItems = function(){
+            $scope.numberOfItems = calculateNumberOfItems( $scope.itemsList );
+        }
 
+        $scope.updateItemsMessage = function(){
+            $scope.itemsMessage = calculateItemsMessage( $scope.numberOfItems );
+        }
 
-  function calculatNumericForString(string) {
-    var totalStringValue = 0;
-    for (var i = 0; i < string.length; i++) {
-      totalStringValue += string.charCodeAt(i);
+        function calculateNumberOfItems( string ){
+            return string.split(",").length;
+        }
+
+        function calculateItemsMessage( numberOfItems ){
+          if(numberOfItems == 0){
+            return "Please enter data first";
+          } else {
+            return numberOfItems < 4 ? "Enjoy!" : "Too much!";
+          }
+        }
     }
 
-    return totalStringValue;
-  }
-
-});
-
-
-})();
+   })();
